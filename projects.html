@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Ahmed Maksud</title>
+  <meta name="description" content="Research projects by Ahmed Maksud: RL-based TWT scheduling for IEEE 802.11ax, RF energy harvesting in ns-3, SVD-CEF physical-layer security, MIMO secret-key capacity, OFDM secrecy optimization, RFIC filter design.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Ahmed Maksud</a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active" href="projects.html">Projects</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="https://github.com/ahmedmaksud" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <h1>Projects</h1>
+  <p class="muted">Research projects with published papers, open-source code, or both.
+  Repositories include reproduction scripts (<code>reproduce_paper.py</code>, <code>run_all.sh</code>) where applicable.</p>
+
+  <!-- ================= Group 1 ================= -->
+  <h2>Wi-Fi Systems &amp; Machine Learning — Texas State University (2024–present)</h2>
+
+  <article class="project">
+    <div>
+      <h3>Deep-RL Target Wake Time Scheduling for IEEE 802.11ax</h3>
+      <div class="badges">
+        <span class="badge">IEEE ICCCN 2026 · 25% acceptance</span>
+        <span class="badge">$70K Comcast Innovation Fund</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/802.11ax-DRL-TWT-ICCCN26" target="_blank" rel="noopener">Code ↗</a>
+      </div>
+      <p>
+        Wi-Fi networks serving heterogeneous IoT and multimedia devices suffer from CSMA contention,
+        the performance anomaly, and excessive energy use — and optimal 802.11ax TWT scheduling is
+        NP-hard (≈10<sup>30</sup> configurations for 32 stations). I built an end-to-end RL scheduler:
+        a modular ns-3 simulator with a custom BSR Manager, Wi-Fi–stack patches for unilateral TWT, a
+        C++↔Python bridge over ns3-ai shared memory, and PPO agents (MLP and LSTM) trained on a
+        208-dimensional <em>protocol-compliant</em> observation space with a 380-configuration action
+        space and three reward presets. Against an analytical M/D/1 baseline:
+        <strong>−44% energy, +18% throughput, −73% packet drops</strong> (MLP-PPO, energy preset) and
+        <strong>−77% drops</strong> (LSTM-PPO, queue preset). Because observations are restricted to
+        standard BSR and 802.11k statistics, the scheduler deploys on existing APs with no firmware
+        changes — a point ICCCN reviewers specifically praised. Extension work is funded by the
+        <strong>$70K Comcast Innovation Fund</strong> (<em>Agentic TWT Scheduler for Future Home Wi-Fi</em>).
+      </p>
+      <p class="stack"><strong>Stack:</strong> C++ (ns-3 3.44), Python, Stable-Baselines3 PPO, ns3-ai shared memory, one-shot build→train→evaluate pipeline.</p>
+    </div>
+    <figure>
+      <img src="assets/img/twt_radar.png" alt="Multi-metric policy comparison radar charts: PPO vs heuristic, analytical, and random baselines across energy, throughput, and queue presets" loading="lazy">
+    </figure>
+  </article>
+
+  <article class="project noimg">
+    <div>
+      <h3>RF Energy Harvesting &amp; Power-Beacon MAC Coordination for IEEE 802.11</h3>
+      <div class="badges">
+        <span class="badge">ns-3 modules</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/Powercast-Energy-Harvester-NS3" target="_blank" rel="noopener">Code ↗</a>
+      </div>
+      <p>
+        ns-3 had no realistic RF energy-harvesting hardware model and no standards-compliant MAC
+        mechanism for power-beacon coordination — blocking research on battery-free IoT. I built two
+        complementary modules: (1) a datasheet-accurate <strong>PowerCast P21XXCSR-EVB Band-6
+        rectenna</strong> model (−40 to +15 dBm sensitivity, 0–85% efficiency curve, three
+        capacitor/voltage classes, three-tier energy accounting, deep-discharge and overshoot
+        protection with pre-TX validation) and (2) <strong>IEEE 802.11 Category-127 vendor-specific
+        action frames</strong> for AP-broadcast power-beacon schedules with autonomous station-side
+        parsing and energy-aware TX gating. Stations harvest, schedule, and gate transmissions with
+        hysteresis-based power management, achieving <strong>&gt;95% beacon-detection accuracy</strong>
+        in simulation. To my knowledge, the first ns-3 harvesting module with datasheet-validated
+        commercial-hardware fidelity.
+      </p>
+      <p class="stack"><strong>Stack:</strong> C++ (ns-3 3.44), ns-3 source patches, PCAP capture + Python analyzer.</p>
+    </div>
+  </article>
+
+  <article class="project noimg">
+    <div>
+      <h3>ns-3 / ns3-ai Simulation Infrastructure</h3>
+      <div class="badges">
+        <span class="badge">Open-source tooling</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/NS3-NS3AI--installation-and-tests" target="_blank" rel="noopener">Installer ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/NS3-Python-Bindings-Wrapper" target="_blank" rel="noopener">Bindings wrapper ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/NS3AI-first-test" target="_blank" rel="noopener">Bootstrap example ↗</a>
+      </div>
+      <p>
+        Bridging ns-3 (C++) to Python ML agents is a recurring blocker: fragile installs, dependency
+        conflicts, and bespoke per-project IPC plumbing. I built a reusable four-layer stack: a
+        one-shot installer for ns-3 3.44 + ns3-ai + Python 3.11 with dependency-conflict resolution
+        (TF/PyTorch ABI pinning), bootstrap examples with proper simulator scheduling, a real-time
+        Wi-Fi simulation with C++↔Python communication (8 mobile stations, log-distance + Nakagami
+        fading), and a Python-bindings wrapper exposing 23 environment and 9 action variables with
+        CSV logging. Downstream RL projects skip installation and IPC work entirely.
+      </p>
+      <p class="stack"><strong>Stack:</strong> Bash, C++, Python, ns3-ai shared memory, CMake.</p>
+    </div>
+  </article>
+
+  <!-- ================= Group 2 ================= -->
+  <h2>Physical-Layer Security &amp; Information Theory — UC Riverside Ph.D. (2018–2024)</h2>
+
+  <article class="project">
+    <div>
+      <h3>SVD-CEF: Continuous Encryption Functions for PHY Security &amp; Key Generation</h3>
+      <div class="badges">
+        <span class="badge">Elsevier SP 2023</span>
+        <span class="badge">IEEE SPL 2022</span>
+        <span class="badge">IEEE ICC 2022</span>
+        <span class="badge">IEEE SPAWC 2020</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/Continuous-Encryption-Functions--ElsevierSP23" target="_blank" rel="noopener">CEF theory ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/SKG-by-CEBQ--SPL22" target="_blank" rel="noopener">CEbQ ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/PLE-for-UAV--ICC22" target="_blank" rel="noopener">UAV PLE ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/CEF-ECC-Reconciliation" target="_blank" rel="noopener">ECC reconciliation ↗</a>
+      </div>
+      <p>
+        Conventional one-way functions are discrete and demand perfectly reliable shared keys — but
+        wireless feature vectors (e.g., reciprocal channel estimates) are always noisy. This
+        four-paper body of work formalized five criteria for a good <em>Continuous Encryption
+        Function</em>, proved prior candidates (random projection, dynamic random projection,
+        index-of-max hashing, higher-order polynomials) each fail at least one, and introduced the
+        <strong>SVD-CEF family</strong> — nonlinear encryption built from SVDs of randomly modulated
+        feature matrices. Applied in two domains: <strong>UAV-to-ground physical-layer
+        encryption</strong> (constellation hiding provably robust against ML-equipped eavesdroppers)
+        and <strong>secret-key generation via encryption-before-quantization</strong> with adaptive
+        fractional quantization (&lt;1 bit/sample). Achieved a <strong>20 dB BER improvement</strong>
+        over direct quantization under RF impairments, <strong>passes NIST randomness tests</strong>,
+        and resists attacks that break dynamic random projection in the same threat model.
+      </p>
+      <p class="stack"><strong>Stack:</strong> Python, MATLAB, multipath/Rician channel models, NIST test suite, Reed-Solomon/Hamming ECC.</p>
+    </div>
+    <figure>
+      <img src="assets/img/u2g_channel.jpg" alt="UAV-to-ground channel scenario with line-of-sight and non-line-of-sight paths and an eavesdropper" loading="lazy">
+    </figure>
+  </article>
+
+  <article class="project">
+    <div>
+      <h3>Secret-Key Capacity of MIMO Channels</h3>
+      <div class="badges">
+        <span class="badge">IEEE WCL 2024</span>
+        <span class="badge">IEEE MILCOM 2023</span>
+        <span class="badge">IEEE CISS 2023</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/SKC-for-MIMO--MilCom23-WCL24" target="_blank" rel="noopener">SKC code ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/SKG-by-GCPP--CISS23" target="_blank" rel="noopener">GCPP code ↗</a>
+      </div>
+      <p>
+        Wyner's wiretap-channel framework predicts <em>zero</em> secrecy whenever the eavesdropper has
+        more antennas or better SNR than the legitimate nodes, and no closed-form secret-key capacity
+        (SKC) expression existed for arbitrary MIMO channels. Using a <strong>generalized channel
+        probing / pre-processing framework</strong> (nodes exchange random matrices beyond public
+        pilots), Maurer's bounds, and random-matrix theory, this work derived closed-form upper/lower
+        SKC bounds, characterized the first-order (∝ log SNR) and SNR-invariant second-order terms,
+        and established the degrees-of-freedom for non-reciprocal MIMO. Key result:
+        <strong>a positive secret-key rate is achievable even when the eavesdropper has more antennas
+        <em>and</em> better SNR</strong> — overturning the conventional wiretap pessimism, with
+        analytical and Monte-Carlo results matching across regimes.
+      </p>
+      <p class="stack"><strong>Stack:</strong> Python (NumPy), gradient/conjugate-gradient solvers, Monte-Carlo validation.</p>
+    </div>
+    <figure>
+      <img src="assets/img/mimo_channel.jpg" alt="MIMO channel model: Alice and Bob with multiple antennas exchanging probes while Eve observes" loading="lazy">
+    </figure>
+  </article>
+
+  <article class="project">
+    <div>
+      <h3>MC-STEEP: Multi-Carrier OFDM Optimization for Secure Communications</h3>
+      <div class="badges">
+        <span class="badge">Ph.D. Dissertation Ch. 6</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/MC-STEEP" target="_blank" rel="noopener">Code ↗</a>
+      </div>
+      <p>
+        STEEP (Secret Transmission by Echoing Encrypted Probes) achieves positive secrecy over
+        non-reciprocal channels with no pre-shared key, but was defined only for single-carrier
+        links — naive OFDM extension wastes secrecy rate and probing power. I formulated
+        multi-carrier STEEP against a multi-antenna eavesdropper and analytically proved three optimal
+        joint policies: similar-sort probe/echo carrier pairing, receiver-side power allocation
+        maximizing average achievable secrecy rate, and a compound two-sided allocation matching that
+        rate at lower probing power. Result: <strong>~50% higher achievable secrecy rate and ~20%
+        lower probing power</strong> across SNR regimes, including regimes that beat the corresponding
+        classic wiretap-channel bound.
+      </p>
+      <p class="stack"><strong>Stack:</strong> Python OFDM evaluation harness, convex/joint-resource optimization.</p>
+    </div>
+    <figure>
+      <img src="assets/img/mcsteep_system.png" alt="MC-STEEP system model: Alice and Bob exchanging multi-carrier probes and echoes while a multi-antenna Eve observes" loading="lazy">
+    </figure>
+  </article>
+
+  <article class="project noimg">
+    <div>
+      <h3>Multi-Antenna Secrecy with a Full-Duplex User vs. Randomly Located Eavesdroppers</h3>
+      <div class="badges">
+        <span class="badge">IEEE TIFS 2021</span>
+        <span class="badge">IEEE GLOBECOM 2019</span>
+        <span class="badge">US Army Research Lab collaboration</span>
+      </div>
+      <p>
+        Closed-form secrecy-outage analysis for a multi-antenna downlink to a single-antenna
+        full-duplex user under Poisson-distributed colluding and non-colluding eavesdroppers —
+        covering transmit antenna selection and beamforming with receiver-side jamming and null-space
+        artificial noise, via stochastic geometry and exact special-function analysis. The analysis
+        reveals a <strong>finite optimal jamming power</strong> (residual self-interference makes
+        max-power jamming counterproductive) and quantifies the outage advantage of beamforming over
+        antenna selection. Joint work with the US Army Research Laboratory and the University of
+        Leicester; published in <strong>IEEE Transactions on Information Forensics and Security</strong>.
+      </p>
+      <p class="stack"><strong>Stack:</strong> Stochastic geometry (PPP), gamma/beta/hypergeometric analysis, Laplace transforms, MATLAB validation.</p>
+    </div>
+  </article>
+
+  <!-- ================= Group 3 ================= -->
+  <h2>RF Hardware &amp; DSP</h2>
+
+  <article class="project">
+    <div>
+      <h3>4th-Order 2.4 GHz Bandpass Filter — Cadence Virtuoso / SpectreRF</h3>
+      <div class="badges">
+        <span class="badge">RFIC design (UCR EE221)</span>
+        <a class="badge repo" href="assets/BandPassFilter.pdf" target="_blank" rel="noopener">Report PDF ↗</a>
+      </div>
+      <p>
+        Designed and characterized a 4th-order shunt-first bandpass filter for the 2.3–2.5 GHz Wi-Fi
+        band in <strong>Cadence Virtuoso</strong> (SpectreRF), using cascaded second-order sections
+        with realistic <strong>Q = 50</strong> components (explicit ESR resistors) and 50 Ω port
+        matching. Achieved <strong>S<sub>11</sub> &lt; −10 dB across the passband</strong> with low
+        insertion loss and a loaded <strong>Q-factor of 24</strong> (2.4 GHz center, 100 MHz
+        bandwidth), validated against 1st- and 2nd-order baselines in MATLAB.
+      </p>
+      <p class="stack"><strong>Stack:</strong> Cadence Virtuoso, SpectreRF, S-parameter analysis, MATLAB.</p>
+    </div>
+    <figure>
+      <img src="assets/img/bpf_schematic.png" alt="Cadence Virtuoso schematic of the 4th-order bandpass filter" loading="lazy">
+    </figure>
+  </article>
+
+  <article class="project noimg">
+    <div>
+      <h3>DSP &amp; Channel-Coding Toolkits</h3>
+      <div class="badges">
+        <span class="badge">MATLAB Communications Toolbox</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/Wireless-ML" target="_blank" rel="noopener">CSI autoencoder ↗</a>
+      </div>
+      <p>
+        Supporting toolkits built alongside the publications: a parameter-swept MATLAB testbed for
+        <strong>M-QAM BER under rate-1/2 Viterbi convolutional coding</strong> (soft/hard decision,
+        traceback 32/48, SNR 0–26 dB, parallelized sweeps); Monte-Carlo secret-key generation
+        simulators (10<sup>6</sup> iterations) that produced the WCL'24/MILCOM'23 figures; and a deep
+        <strong>autoencoder for CSI compression</strong> in PyTorch.
+      </p>
+      <p class="stack"><strong>Stack:</strong> MATLAB (Communications Toolbox, parfor), Python, PyTorch.</p>
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ahmed Maksud</span>
+    <span><a href="mailto:ahmed.maksud@email.ucr.edu">ahmed.maksud@email.ucr.edu</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,78 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Repositories</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        .repo-list {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .repo {
-            background: #fff;
-            margin: 1rem 0;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .repo h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        .repo p {
-            margin: 0.5rem 0 0;
-            color: #555;
-        }
-        .repo a {
-            display: inline-block;
-            margin-top: 0.5rem;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .repo a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahmed Maksud — Wireless Systems Researcher</title>
+  <meta name="description" content="Ahmed Maksud, Ph.D. — wireless systems researcher: IEEE 802.11 MAC, ML/RL for Wi-Fi, physical-layer security and DSP. Postdoc at Texas State University; Ph.D. from UC Riverside.">
+  <meta property="og:title" content="Ahmed Maksud — Wireless Systems Researcher">
+  <meta property="og:description" content="IEEE 802.11 MAC · ML/RL for Wi-Fi · PHY-layer security and DSP. ICCCN'26, $70K Comcast Innovation Fund, 10 peer-reviewed publications.">
+  <meta property="og:image" content="https://ahmedmaksud.github.io/assets/img/photo.jpg">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>My GitHub Repositories</h1>
-    </header>
-    <div class="repo-list" id="repo-list">
-        <!-- Repositories will be loaded here -->
-    </div>
 
-    <script>
-        async function fetchRepos() {
-            const response = await fetch('https://api.github.com/users/ahmedmaksud/repos');
-            const repos = await response.json();
-            const repoList = document.getElementById('repo-list');
-            repos.forEach(repo => {
-                const repoDiv = document.createElement('div');
-                repoDiv.className = 'repo';
-                repoDiv.innerHTML = `
-                    <h2>${repo.name}</h2>
-                    <p>${repo.description || 'No description available.'}</p>
-                    <a href="${repo.html_url}" target="_blank">View Repository</a>
-                `;
-                repoList.appendChild(repoDiv);
-            });
-        }
-        fetchRepos();
-    </script>
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Ahmed Maksud</a>
+    <ul>
+      <li><a class="active" href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="https://github.com/ahmedmaksud" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <div class="hero">
+    <div class="intro">
+      <h1>Ahmed Maksud, Ph.D.</h1>
+      <p class="tagline">Wireless systems researcher — IEEE 802.11 MAC&nbsp;·&nbsp;ML/RL for Wi-Fi&nbsp;·&nbsp;PHY-layer security &amp; DSP</p>
+      <p>
+        I am a Postdoctoral Research Fellow at <strong>Texas State University</strong>, building
+        intelligent and sustainable next-generation Wi-Fi: reinforcement-learning-based
+        <strong>Target Wake Time (TWT) scheduling</strong> and <strong>RF energy harvesting</strong>
+        for IEEE 802.11 networks, implemented as protocol-compliant, open-source
+        <strong>ns-3</strong> pipelines (C++/Python). I received my Ph.D. in Electrical Engineering from
+        <strong>UC Riverside</strong> (2024), where I worked on physical-layer security —
+        continuous encryption functions, MIMO secret-key capacity, and OFDM secrecy optimization —
+        bridging formal analysis (information theory, random-matrix theory) with reproducible implementation.
+      </p>
+      <div class="linkrow">
+        <a class="primary" href="assets/cv/AhmedMaksud_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+        <a href="mailto:ahmed.maksud@email.ucr.edu">Email</a>
+        <a href="https://scholar.google.com/citations?user=E0g05VMAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+        <a href="https://github.com/ahmedmaksud" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <img class="portrait" src="assets/img/photo.jpg" alt="Portrait of Ahmed Maksud">
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="num">IEEE ICCCN 2026</div>
+      <div class="lbl">Deep-RL TWT scheduling paper accepted — 25% acceptance rate</div>
+    </div>
+    <div class="stat">
+      <div class="num">$70K Comcast Innovation Fund</div>
+      <div class="lbl">Agentic TWT Scheduler for Future Home Wi-Fi (2026)</div>
+    </div>
+    <div class="stat">
+      <div class="num">10 peer-reviewed publications</div>
+      <div class="lbl">IEEE TIFS, WCL, SPL, ICC, MILCOM, CISS, SPAWC, GLOBECOM &amp; Elsevier SP</div>
+    </div>
+  </div>
+
+  <h2>News</h2>
+  <ul class="news">
+    <li><span class="date">May 2026</span><span>NSF NeTS proposal #2625705 submitted (under review) — <em>Smart-Sustainable Wi-Fi: Intelligent Network Orchestration with Energy Harvesting Integration and Hardware Validation</em>.</span></li>
+    <li><span class="date">Apr 2026</span><span><strong>$70,000 Comcast Innovation Fund</strong> secured for <em>Agentic TWT Scheduler for Future Home Wi-Fi</em>.</span></li>
+    <li><span class="date">Apr 2026</span><span>Paper accepted at <strong>IEEE ICCCN 2026</strong> (25% acceptance rate): <em>Deep Reinforcement Learning-based Dynamic TWT Scheduling for Heterogeneous Wi-Fi Networks</em>.</span></li>
+    <li><span class="date">Sep 2024</span><span>Started as Postdoctoral Research Fellow at Texas State University (PI: <a href="https://faculty.txst.edu/profile/2416001" target="_blank" rel="noopener">Marcelo M. Carvalho</a>).</span></li>
+    <li><span class="date">Sep 2024</span><span>Ph.D. in Electrical Engineering granted, UC Riverside — thesis: <a href="https://www.proquest.com/docview/3119493414" target="_blank" rel="noopener"><em>Novel Methods for Wireless Network Security</em></a>.</span></li>
+    <li><span class="date">May 2024</span><span>Letter published in <strong>IEEE Wireless Communications Letters</strong>: <em>Secret-Key Capacity From MIMO Channel Probing</em>.</span></li>
+  </ul>
+
+  <h2>Experience</h2>
+  <div class="rows">
+    <div class="row">
+      <div class="head">
+        <span class="where">Texas State University — Postdoctoral Research Fellow</span>
+        <span class="when">Sept 2024 – present</span>
+      </div>
+      <div class="sub">San Marcos, TX · PI: Marcelo M. Carvalho</div>
+      <p>RL-based TWT scheduling and RF energy harvesting for IEEE 802.11 (ns-3, C++/Python, PPO);
+         secured $70K Comcast Innovation Fund; hands-on 5G O-RAN xApp experience on a Firecell Labkit testbed.</p>
+    </div>
+    <div class="row">
+      <div class="head">
+        <span class="where">University of California, Riverside — Graduate Student Researcher</span>
+        <span class="when">July 2019 – Aug 2024</span>
+      </div>
+      <div class="sub">Riverside, CA · Advisor: Yingbo Hua (Fellow, IEEE) · US Army Research Office funded</div>
+      <p>Physical-layer security: SVD-based continuous encryption functions (20 dB BER gain, NIST-validated),
+         closed-form MIMO secret-key capacity bounds, and OFDM secrecy-rate optimization.</p>
+    </div>
+    <div class="row">
+      <div class="head">
+        <span class="where">North-West Power Generation Co. Ltd. — Assistant Engineer</span>
+        <span class="when">Feb – Aug 2018</span>
+      </div>
+      <div class="sub">Sirajganj, Bangladesh</div>
+      <p>Operations and maintenance of a 225 MW thermal power plant; capacity scheduling and load forecasting.</p>
+    </div>
+  </div>
+
+  <h2>Education</h2>
+  <div class="rows">
+    <div class="row">
+      <div class="head">
+        <span class="where">Ph.D., Electrical Engineering — University of California, Riverside</span>
+        <span class="when">2018 – 2024</span>
+      </div>
+      <div class="sub">GPA 4.00/4.00 · Advisor: Yingbo Hua · Thesis: <a href="https://www.proquest.com/docview/3119493414" target="_blank" rel="noopener">Novel Methods for Wireless Network Security</a></div>
+    </div>
+    <div class="row">
+      <div class="head">
+        <span class="where">B.Sc., Electrical &amp; Electronic Engineering — Bangladesh University of Engineering and Technology</span>
+        <span class="when">2013 – 2017</span>
+      </div>
+      <div class="sub">GPA 3.72/4.00 · Dhaka, Bangladesh</div>
+    </div>
+  </div>
+
+  <h2>Selected Honors</h2>
+  <ul>
+    <li><strong>$70K Comcast Innovation Fund</strong> (2026) — <em>Agentic TWT Scheduler for Future Home Wi-Fi</em></li>
+    <li><strong>Dean's Distinguished Fellowship</strong>, UCR Electrical and Computer Engineering (2018)</li>
+    <li><strong>Second Runner-up</strong>, IEEE Video and Image Processing (VIP) Cup (2017)</li>
+    <li><strong>Honorable Mention</strong>, International Physics Olympiad (2012)</li>
+    <li><strong>Technical Reviewer</strong> — IEEE IROS, ISIT, ICC, WCNC, ICMLCN, GLOBECOM, WiOpt (2023–present); <strong>TPC Member</strong>, IEEE Cloud Summit 2026</li>
+  </ul>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ahmed Maksud</span>
+    <span><a href="mailto:ahmed.maksud@email.ucr.edu">ahmed.maksud@email.ucr.edu</a></span>
+  </div>
+</footer>
+
 </body>
 </html>

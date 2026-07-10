@@ -32,7 +32,7 @@
   <!-- ================= Group 1 ================= -->
   <h2>Wi-Fi Systems &amp; Machine Learning — Texas State University (2024–present)</h2>
 
-  <article class="project">
+  <article class="project bigfig">
     <div>
       <h3>Deep-RL Target Wake Time Scheduling for IEEE 802.11ax</h3>
       <div class="badges">
@@ -51,7 +51,7 @@
         space and three reward presets. Against an analytical M/D/1 baseline:
         <strong>−44% energy, +18% throughput, −73% packet drops</strong> (MLP-PPO, energy preset) and
         <strong>−77% drops</strong> (LSTM-PPO, queue preset). Because observations are restricted to
-        standard BSR and 802.11k statistics, the scheduler deploys on existing APs with no firmware
+        standard BSR and 802.11k statistics, the scheduler is deployable on existing APs with no firmware
         changes.
       </p>
       <p class="stack"><strong>Stack:</strong> C++ (ns-3 3.44), Python, Stable-Baselines3 PPO, ns3-ai shared memory, one-shot build→train→evaluate pipeline.</p>
@@ -118,13 +118,13 @@
       <p>
         Conventional one-way functions are discrete and demand perfectly reliable shared keys, but
         wireless feature vectors (e.g., reciprocal channel estimates) are always noisy. This
-        four-paper body of work formalized five criteria for a good <em>Continuous Encryption
-        Function</em>, proved prior candidates (random projection, dynamic random projection,
+        body of work formalized five criteria for a good <em>Continuous Encryption
+        Function</em> (CEF), proved prior candidates (random projection, dynamic random projection,
         index-of-max hashing, higher-order polynomials) each fail at least one, and introduced the
         <strong>SVD-CEF family</strong>, which is nonlinear encryption built from SVDs of randomly
-        modulated feature matrices. Applied in two domains: <strong>UAV-to-ground physical-layer
+        modulated feature matrices. Applied in two domains: (1) <strong>UAV-to-ground physical-layer
         encryption</strong> (symbol and constellation hiding, provably robust against ML-equipped
-        eavesdroppers) and <strong>secret-key generation via encryption-before-quantization</strong>
+        eavesdroppers); and (2) <strong>secret-key generation via encryption-before-quantization</strong>
         with adaptive fractional quantization. Achieved a <strong>20 dB BER improvement</strong>
         over direct quantization under RF impairments and <strong>passed NIST randomness tests</strong>.
       </p>
@@ -170,12 +170,12 @@
       </div>
       <p>
         STEEP (Secret Transmission by Echoing Encrypted Probes) achieves positive secrecy over
-        non-reciprocal channels with no pre-shared key, but was defined only for single-carrier
-        links — naive OFDM extension wastes secrecy rate and probing power. I formulated
-        multi-carrier STEEP against a multi-antenna eavesdropper and analytically proved three optimal
-        joint policies: similar-sort probe/echo carrier pairing, receiver-side power allocation
-        maximizing average achievable secrecy rate, and a compound two-sided allocation matching that
-        rate at lower probing power. Result: <strong>~28% higher peak secrecy rate, matched at ~4 dB
+        non-reciprocal channels with no pre-shared key through two-phase signaling (probe and echo),
+        but was defined only for single-carrier links, and naive OFDM extension wastes secrecy rate
+        and probing power. I formulated multi-carrier STEEP against a multi-antenna eavesdropper and
+        analytically proved three optimal joint policies: (1) probe/echo carrier pairing,
+        (2) receiver-side power allocation maximizing average achievable secrecy rate, and (3) a
+        compound two-sided allocation matching that rate at lower probing power. Result: <strong>~28% higher peak secrecy rate, matched at ~4 dB
         lower probing power, sustaining up to ~83% of secret-key capacity</strong> where the classic
         wiretap-channel rate is essentially zero against a multi-antenna eavesdropper.
       </p>

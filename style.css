@@ -228,6 +228,8 @@ ul.news .date {
 
 .project.noimg { grid-template-columns: 1fr; }
 
+.project.bigfig { grid-template-columns: 1fr 314px; }  /* ~10% wider figure column */
+
 .project figure { margin: 0; align-self: center; }
 
 .project figure img {

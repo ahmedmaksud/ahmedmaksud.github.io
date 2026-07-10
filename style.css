@@ -279,12 +279,13 @@ ol.pubs li { margin: 0 0 18px; font-size: 15.5px; }
 ol.pubs .venue { font-weight: 650; }
 ol.pubs .me { font-weight: 700; text-decoration: underline; }
 
-.publinks { margin-top: 2px; }
+.publinks { display: inline; margin-left: 4px; }
 
 .publinks a {
   font-size: 13px;
   font-weight: 600;
-  margin-right: 10px;
+  margin-right: 8px;
+  white-space: nowrap;
 }
 
 /* ---------- cv page ---------- */

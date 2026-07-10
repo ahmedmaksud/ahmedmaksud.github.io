@@ -36,50 +36,46 @@
     <div>
       <h3>Deep-RL Target Wake Time Scheduling for IEEE 802.11ax</h3>
       <div class="badges">
-        <span class="badge">IEEE ICCCN 2026 · 25% acceptance</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/802.11ax-DRL-TWT-ICCCN26" target="_blank" rel="noopener">IEEE ICCCN 2026 ↗</a>
         <span class="badge">$70K Comcast Innovation Fund</span>
-        <a class="badge repo" href="https://github.com/ahmedmaksud/802.11ax-DRL-TWT-ICCCN26" target="_blank" rel="noopener">Code ↗</a>
       </div>
       <p>
         Wi-Fi networks serving heterogeneous IoT and multimedia devices suffer from CSMA contention,
-        the performance anomaly, and excessive energy use — and optimal 802.11ax TWT scheduling is
-        NP-hard (≈10<sup>30</sup> configurations for 32 stations). I built an end-to-end RL scheduler:
-        a modular ns-3 simulator with a custom BSR Manager, Wi-Fi–stack patches for unilateral TWT, a
-        C++↔Python bridge over ns3-ai shared memory, and PPO agents (MLP and LSTM) trained on a
+        resulting in performance anomaly and excessive energy use. Target Wake Time (TWT) improves this
+        by slicing the beacon interval into non-overlapping service periods (SPs) and assigning one or
+        more stations to each SP. However, optimal 802.11ax TWT scheduling is NP-hard
+        (≈10<sup>30</sup> configurations for 32 stations). To solve this, I developed an end-to-end RL
+        scheduler in an ns-3 simulator with a custom BSR Manager, Wi-Fi-stack patches for unilateral TWT,
+        a C++↔Python bridge over ns3-ai shared memory, and PPO agents (MLP and LSTM) trained on a
         208-dimensional <em>protocol-compliant</em> observation space with a 380-configuration action
         space and three reward presets. Against an analytical M/D/1 baseline:
         <strong>−44% energy, +18% throughput, −73% packet drops</strong> (MLP-PPO, energy preset) and
         <strong>−77% drops</strong> (LSTM-PPO, queue preset). Because observations are restricted to
         standard BSR and 802.11k statistics, the scheduler deploys on existing APs with no firmware
-        changes — a point ICCCN reviewers specifically praised. Extension work is funded by the
-        <strong>$70K Comcast Innovation Fund</strong> (<em>Agentic TWT Scheduler for Future Home Wi-Fi</em>).
+        changes.
       </p>
       <p class="stack"><strong>Stack:</strong> C++ (ns-3 3.44), Python, Stable-Baselines3 PPO, ns3-ai shared memory, one-shot build→train→evaluate pipeline.</p>
     </div>
     <figure>
-      <img src="assets/img/twt_radar.png" alt="Multi-metric policy comparison radar charts: PPO vs heuristic, analytical, and random baselines across energy, throughput, and queue presets" loading="lazy">
+      <img src="assets/img/twt_system_model.jpg" alt="Wi-Fi 6 TWT system model: 16 stations across four traffic types (IoT sensor, video camera, voice assistant, video stream) around one AP in a 30 m by 30 m indoor 802.11ax environment" loading="lazy">
     </figure>
   </article>
 
   <article class="project noimg">
     <div>
-      <h3>RF Energy Harvesting &amp; Power-Beacon MAC Coordination for IEEE 802.11</h3>
+      <h3>RF Energy Harvesting &amp; Power-Delivery MAC Coordination for IEEE 802.11</h3>
       <div class="badges">
-        <span class="badge">ns-3 modules</span>
-        <a class="badge repo" href="https://github.com/ahmedmaksud/Powercast-Energy-Harvester-NS3" target="_blank" rel="noopener">Code ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/Powercast-Energy-Harvester-NS3" target="_blank" rel="noopener">ns-3 modules ↗</a>
       </div>
       <p>
         ns-3 had no realistic RF energy-harvesting hardware model and no standards-compliant MAC
-        mechanism for power-beacon coordination — blocking research on battery-free IoT. I built two
+        mechanism for power-delivery coordination, impeding research on battery-free IoT. I built two
         complementary modules: (1) a datasheet-accurate <strong>PowerCast P21XXCSR-EVB Band-6
-        rectenna</strong> model (−40 to +15 dBm sensitivity, 0–85% efficiency curve, three
-        capacitor/voltage classes, three-tier energy accounting, deep-discharge and overshoot
-        protection with pre-TX validation) and (2) <strong>IEEE 802.11 Category-127 vendor-specific
-        action frames</strong> for AP-broadcast power-beacon schedules with autonomous station-side
-        parsing and energy-aware TX gating. Stations harvest, schedule, and gate transmissions with
-        hysteresis-based power management, achieving <strong>&gt;95% beacon-detection accuracy</strong>
-        in simulation. To my knowledge, the first ns-3 harvesting module with datasheet-validated
-        commercial-hardware fidelity.
+        rectenna</strong> model (−40 to +15 dBm sensitivity, 0–85% efficiency curve, capacitor/voltage
+        classes, energy accounting, deep-discharge and overcharge protection with pre-TX validation)
+        and (2) <strong>IEEE 802.11 Category-127 vendor-specific action frames</strong> for
+        AP-broadcast power-delivery schedules with autonomous station-side parsing. Stations harvest,
+        schedule, and gate transmissions with hysteresis-based power management.
       </p>
       <p class="stack"><strong>Stack:</strong> C++ (ns-3 3.44), ns-3 source patches, PCAP capture + Python analyzer.</p>
     </div>
@@ -89,14 +85,13 @@
     <div>
       <h3>ns-3 / ns3-ai Simulation Infrastructure</h3>
       <div class="badges">
-        <span class="badge">Open-source tooling</span>
         <a class="badge repo" href="https://github.com/ahmedmaksud/NS3-NS3AI--installation-and-tests" target="_blank" rel="noopener">Installer ↗</a>
         <a class="badge repo" href="https://github.com/ahmedmaksud/NS3-Python-Bindings-Wrapper" target="_blank" rel="noopener">Bindings wrapper ↗</a>
         <a class="badge repo" href="https://github.com/ahmedmaksud/NS3AI-first-test" target="_blank" rel="noopener">Bootstrap example ↗</a>
       </div>
       <p>
-        Bridging ns-3 (C++) to Python ML agents is a recurring blocker: fragile installs, dependency
-        conflicts, and bespoke per-project IPC plumbing. I built a reusable four-layer stack: a
+        Bridging ns-3 (C++) to Python ML agents is a recurring blocker with fragile installs and
+        dependency conflicts. I built a reusable four-layer stack: a
         one-shot installer for ns-3 3.44 + ns3-ai + Python 3.11 with dependency-conflict resolution
         (TF/PyTorch ABI pinning), bootstrap examples with proper simulator scheduling, a real-time
         Wi-Fi simulation with C++↔Python communication (8 mobile stations, log-distance + Nakagami
@@ -112,30 +107,26 @@
 
   <article class="project">
     <div>
-      <h3>SVD-CEF: Continuous Encryption Functions for PHY Security &amp; Key Generation</h3>
+      <h3>SVD-CEF: Continuous Encryption Functions for Physical-Layer Security &amp; Key Generation</h3>
       <div class="badges">
-        <span class="badge">Elsevier SP 2023</span>
-        <span class="badge">IEEE SPL 2022</span>
-        <span class="badge">IEEE ICC 2022</span>
-        <span class="badge">IEEE SPAWC 2020</span>
-        <a class="badge repo" href="https://github.com/ahmedmaksud/Continuous-Encryption-Functions--ElsevierSP23" target="_blank" rel="noopener">CEF theory ↗</a>
-        <a class="badge repo" href="https://github.com/ahmedmaksud/SKG-by-CEBQ--SPL22" target="_blank" rel="noopener">CEbQ ↗</a>
-        <a class="badge repo" href="https://github.com/ahmedmaksud/PLE-for-UAV--ICC22" target="_blank" rel="noopener">UAV PLE ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/Continuous-Encryption-Functions--ElsevierSP23" target="_blank" rel="noopener">Elsevier SP 2023 ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/SKG-by-CEBQ--SPL22" target="_blank" rel="noopener">IEEE SPL 2022 ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/PLE-for-UAV--ICC22" target="_blank" rel="noopener">IEEE ICC 2022 ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/Secrecy-by-RRCM-ComplexityAnalysis--SPAWC20" target="_blank" rel="noopener">IEEE SPAWC 2020 ↗</a>
         <a class="badge repo" href="https://github.com/ahmedmaksud/CEF-ECC-Reconciliation" target="_blank" rel="noopener">ECC reconciliation ↗</a>
       </div>
       <p>
-        Conventional one-way functions are discrete and demand perfectly reliable shared keys — but
+        Conventional one-way functions are discrete and demand perfectly reliable shared keys, but
         wireless feature vectors (e.g., reciprocal channel estimates) are always noisy. This
         four-paper body of work formalized five criteria for a good <em>Continuous Encryption
         Function</em>, proved prior candidates (random projection, dynamic random projection,
         index-of-max hashing, higher-order polynomials) each fail at least one, and introduced the
-        <strong>SVD-CEF family</strong> — nonlinear encryption built from SVDs of randomly modulated
-        feature matrices. Applied in two domains: <strong>UAV-to-ground physical-layer
-        encryption</strong> (constellation hiding provably robust against ML-equipped eavesdroppers)
-        and <strong>secret-key generation via encryption-before-quantization</strong> with adaptive
-        fractional quantization (&lt;1 bit/sample). Achieved a <strong>20 dB BER improvement</strong>
-        over direct quantization under RF impairments, <strong>passes NIST randomness tests</strong>,
-        and resists attacks that break dynamic random projection in the same threat model.
+        <strong>SVD-CEF family</strong>, which is nonlinear encryption built from SVDs of randomly
+        modulated feature matrices. Applied in two domains: <strong>UAV-to-ground physical-layer
+        encryption</strong> (symbol and constellation hiding, provably robust against ML-equipped
+        eavesdroppers) and <strong>secret-key generation via encryption-before-quantization</strong>
+        with adaptive fractional quantization. Achieved a <strong>20 dB BER improvement</strong>
+        over direct quantization under RF impairments and <strong>passed NIST randomness tests</strong>.
       </p>
       <p class="stack"><strong>Stack:</strong> Python, MATLAB, multipath/Rician channel models, NIST test suite, Reed-Solomon/Hamming ECC.</p>
     </div>
@@ -148,11 +139,9 @@
     <div>
       <h3>Secret-Key Capacity of MIMO Channels</h3>
       <div class="badges">
-        <span class="badge">IEEE WCL 2024</span>
-        <span class="badge">IEEE MILCOM 2023</span>
-        <span class="badge">IEEE CISS 2023</span>
-        <a class="badge repo" href="https://github.com/ahmedmaksud/SKC-for-MIMO--MilCom23-WCL24" target="_blank" rel="noopener">SKC code ↗</a>
-        <a class="badge repo" href="https://github.com/ahmedmaksud/SKG-by-GCPP--CISS23" target="_blank" rel="noopener">GCPP code ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/SKC-for-MIMO--MilCom23-WCL24" target="_blank" rel="noopener">IEEE WCL 2024 ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/SKC-for-MIMO--MilCom23-WCL24" target="_blank" rel="noopener">IEEE MILCOM 2023 ↗</a>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/SKG-by-GCPP--CISS23" target="_blank" rel="noopener">IEEE CISS 2023 ↗</a>
       </div>
       <p>
         Wyner's wiretap-channel framework predicts <em>zero</em> secrecy whenever the eavesdropper has
@@ -160,11 +149,10 @@
         (SKC) expression existed for arbitrary MIMO channels. Using a <strong>generalized channel
         probing / pre-processing framework</strong> (nodes exchange random matrices beyond public
         pilots), Maurer's bounds, and random-matrix theory, this work derived closed-form upper/lower
-        SKC bounds, characterized the first-order (∝ log SNR) and SNR-invariant second-order terms,
-        and established the degrees-of-freedom for non-reciprocal MIMO. Key result:
-        <strong>a positive secret-key rate is achievable even when the eavesdropper has more antennas
-        <em>and</em> better SNR</strong> — overturning the conventional wiretap pessimism, with
-        analytical and Monte-Carlo results matching across regimes.
+        SKC bounds and characterized the first-order (∝ log SNR) and SNR-invariant second-order terms.
+        The key result is that <strong>a positive secret-key rate is achievable even when the
+        eavesdropper has more antennas and better SNR</strong>, overturning the conventional wiretap
+        pessimism, with analytical and Monte-Carlo results matching across regimes.
       </p>
       <p class="stack"><strong>Stack:</strong> Python (NumPy), gradient/conjugate-gradient solvers, Monte-Carlo validation.</p>
     </div>
@@ -196,28 +184,6 @@
     <figure>
       <img src="assets/img/mcsteep_system.png" alt="MC-STEEP system model: Alice and Bob exchanging multi-carrier probes and echoes while a multi-antenna Eve observes" loading="lazy">
     </figure>
-  </article>
-
-  <article class="project noimg">
-    <div>
-      <h3>Multi-Antenna Secrecy with a Full-Duplex User vs. Randomly Located Eavesdroppers</h3>
-      <div class="badges">
-        <span class="badge">IEEE TIFS 2021</span>
-        <span class="badge">IEEE GLOBECOM 2019</span>
-        <span class="badge">US Army Research Lab collaboration</span>
-      </div>
-      <p>
-        Closed-form secrecy-outage analysis for a multi-antenna downlink to a single-antenna
-        full-duplex user under Poisson-distributed colluding and non-colluding eavesdroppers —
-        covering transmit antenna selection and beamforming with receiver-side jamming and null-space
-        artificial noise, via stochastic geometry and exact special-function analysis. The analysis
-        reveals a <strong>finite optimal jamming power</strong> (residual self-interference makes
-        max-power jamming counterproductive) and quantifies the outage advantage of beamforming over
-        antenna selection. Joint work with the US Army Research Laboratory and the University of
-        Leicester; published in <strong>IEEE Transactions on Information Forensics and Security</strong>.
-      </p>
-      <p class="stack"><strong>Stack:</strong> Stochastic geometry (PPP), gamma/beta/hypergeometric analysis, Laplace transforms, MATLAB validation.</p>
-    </div>
   </article>
 
   <!-- ================= Group 3 ================= -->
@@ -253,13 +219,13 @@
         <a class="badge repo" href="https://github.com/ahmedmaksud/Wireless-ML" target="_blank" rel="noopener">CSI autoencoder ↗</a>
       </div>
       <p>
-        Supporting toolkits built alongside the publications: a parameter-swept MATLAB testbed for
-        <strong>M-QAM BER under rate-1/2 Viterbi convolutional coding</strong> (soft/hard decision,
-        traceback 32/48, SNR 0–26 dB, parallelized sweeps); Monte-Carlo secret-key generation
-        simulators (10<sup>6</sup> iterations) that produced the WCL'24/MILCOM'23 figures; and a deep
-        <strong>autoencoder for CSI compression</strong> in PyTorch.
+        Two standalone toolkits: (1) a parameter-swept MATLAB testbed for <strong>M-QAM BER under
+        rate-1/2 Viterbi convolutional coding</strong> (soft/hard decision, traceback 32/48,
+        SNR 0–26 dB, parallelized sweeps), and (2) a convolutional <strong>autoencoder for CSI
+        compression and denoising</strong> in TensorFlow/Keras, trained on COST 2100 massive-MIMO
+        channel data.
       </p>
-      <p class="stack"><strong>Stack:</strong> MATLAB (Communications Toolbox, parfor), Python, PyTorch.</p>
+      <p class="stack"><strong>Stack:</strong> MATLAB (Communications Toolbox, parfor), Python, TensorFlow/Keras.</p>
     </div>
   </article>
 

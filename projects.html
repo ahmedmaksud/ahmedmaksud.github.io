@@ -57,11 +57,11 @@
       <p class="stack"><strong>Stack:</strong> C++ (ns-3 3.44), Python, Stable-Baselines3 PPO, ns3-ai shared memory, one-shot build→train→evaluate pipeline.</p>
     </div>
     <figure>
-      <img src="assets/img/twt_system_model.jpg" alt="Wi-Fi 6 TWT system model: 16 stations across four traffic types (IoT sensor, video camera, voice assistant, video stream) around one AP in a 30 m by 30 m indoor 802.11ax environment" loading="lazy">
+      <img src="assets/img/twt_allocation.jpg" alt="TWT window allocation across two beacon intervals: 16 stations grouped into service periods SP1 to SP4 within beacon interval n, with the scheduler reassigning stations into different groups and service periods in interval n+1, and CSMA/CA windows left for legacy devices" loading="lazy">
     </figure>
   </article>
 
-  <article class="project noimg">
+  <article class="project">
     <div>
       <h3>RF Energy Harvesting &amp; Power-Delivery MAC Coordination for IEEE 802.11</h3>
       <div class="badges">
@@ -79,6 +79,9 @@
       </p>
       <p class="stack"><strong>Stack:</strong> C++ (ns-3 3.44), ns-3 source patches, PCAP capture + Python analyzer.</p>
     </div>
+    <figure>
+      <img src="assets/img/harvester_capacitor.png" alt="Capacitor voltage of a harvesting station over time: harvest ramps charge the capacitor toward its safety limit, transmissions discharge it, with voltage-class thresholds, deep-discharge protection, and RX/TX-confirmed/TX-blocked periods marked" loading="lazy">
+    </figure>
   </article>
 
   <article class="project noimg">
@@ -191,23 +194,23 @@
 
   <article class="project">
     <div>
-      <h3>4th-Order 2.4 GHz Bandpass Filter — Cadence Virtuoso / SpectreRF</h3>
+      <h3>4th-Order 2.4 GHz Bandpass Filter — S-Parameter Analysis</h3>
       <div class="badges">
-        <span class="badge">RFIC design (UCR EE221)</span>
-        <a class="badge repo" href="assets/BandPassFilter.pdf" target="_blank" rel="noopener">Report PDF ↗</a>
+        <span class="badge">RFIC design</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/RF-bandpass" target="_blank" rel="noopener">Code ↗</a>
       </div>
       <p>
         Designed and characterized a 4th-order shunt-first bandpass filter for the 2.3–2.5 GHz Wi-Fi
-        band in <strong>Cadence Virtuoso</strong> (SpectreRF), using cascaded second-order sections
-        with realistic <strong>Q = 50</strong> components (explicit ESR resistors) and 50 Ω port
-        matching. Achieved <strong>S<sub>11</sub> &lt; −10 dB across the passband</strong> with low
-        insertion loss and a loaded <strong>Q-factor of 24</strong> (2.4 GHz center, 100 MHz
-        bandwidth), validated against 1st- and 2nd-order baselines in MATLAB.
+        band, using cascaded second-order sections with realistic <strong>Q = 50</strong> components
+        (explicit ESR resistors) and 50 Ω port matching. Achieved <strong>S<sub>11</sub> &lt; −10 dB
+        across the passband</strong> with low insertion loss and a loaded <strong>Q-factor of 24</strong>
+        (2.4 GHz center, 100 MHz bandwidth), cross-validated by two independent solvers
+        (<strong>ngspice</strong> and a <strong>MATLAB ABCD</strong> analysis) that agree to 0.01 dB.
       </p>
-      <p class="stack"><strong>Stack:</strong> Cadence Virtuoso, SpectreRF, S-parameter analysis, MATLAB.</p>
+      <p class="stack"><strong>Stack:</strong> ngspice, MATLAB, S-parameter analysis (ABCD).</p>
     </div>
     <figure>
-      <img src="assets/img/bpf_schematic.png" alt="Cadence Virtuoso schematic of the 4th-order bandpass filter" loading="lazy">
+      <img src="assets/img/bpf_sparams.png" alt="ngspice S-parameters of the 4th-order band-pass filter: S21 peaks near 2.4 GHz with steep skirts falling to about -110 dB at 1 GHz and -89 dB at 4 GHz, while S11 stays below -10 dB across the passband with a deep null near -58 dB at 2.37 GHz" loading="lazy">
     </figure>
   </article>
 
@@ -215,17 +218,19 @@
     <div>
       <h3>DSP &amp; Channel-Coding Toolkits</h3>
       <div class="badges">
-        <span class="badge">MATLAB Communications Toolbox</span>
+        <span class="badge">MATLAB + Python</span>
+        <a class="badge repo" href="https://github.com/ahmedmaksud/Channel-Coding-Testbeds" target="_blank" rel="noopener">Channel-coding testbeds ↗</a>
         <a class="badge repo" href="https://github.com/ahmedmaksud/Wireless-ML" target="_blank" rel="noopener">CSI autoencoder ↗</a>
       </div>
       <p>
-        Two standalone toolkits: (1) a parameter-swept MATLAB testbed for <strong>M-QAM BER under
-        rate-1/2 Viterbi convolutional coding</strong> (soft/hard decision, traceback 32/48,
-        SNR 0–26 dB, parallelized sweeps), and (2) a convolutional <strong>autoencoder for CSI
-        compression and denoising</strong> in TensorFlow/Keras, trained on COST 2100 massive-MIMO
-        channel data.
+        Two standalone toolkits: (1) MATLAB channel-coding testbeds pairing <strong>M-QAM BER under
+        rate-1/2 Viterbi convolutional coding</strong> (soft/hard decision, traceback 32/48, SNR
+        0–26 dB, parallelized sweeps) with <strong>Wyner wiretap-channel secrecy coding on the 5G NR
+        LDPC chain</strong> (the legitimate receiver decodes while an eavesdropper on a worse channel
+        cannot); and (2) a convolutional <strong>autoencoder for CSI compression and denoising</strong>
+        in TensorFlow/Keras, trained on COST 2100 massive-MIMO channel data.
       </p>
-      <p class="stack"><strong>Stack:</strong> MATLAB (Communications Toolbox, parfor), Python, TensorFlow/Keras.</p>
+      <p class="stack"><strong>Stack:</strong> MATLAB (Communications &amp; 5G Toolboxes, parfor), Python, TensorFlow/Keras.</p>
     </div>
   </article>
 
